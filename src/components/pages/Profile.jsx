@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import Card from "@/components/atoms/Card"
 import Button from "@/components/atoms/Button"
@@ -11,6 +12,7 @@ import ApperIcon from "@/components/ApperIcon"
 import profileService from "@/services/api/profileService"
 
 const Profile = () => {
+  const navigate = useNavigate()
   const [profile, setProfile] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -74,27 +76,40 @@ const Profile = () => {
   return (
     <div className="space-y-8">
       {/* Profile Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">My Profile</h1>
-          <p className="text-slate-600">Manage your personal information and account settings</p>
+<div className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => navigate(-1)} 
+            variant="outline"
+            className="shrink-0"
+          >
+            <ApperIcon name="ChevronLeft" size={18} />
+            Back
+          </Button>
         </div>
-        <div className="flex items-center gap-3">
-          {!isEditing ? (
-            <Button onClick={() => setIsEditing(true)} variant="primary">
-              <ApperIcon name="Edit2" size={18} />
-              Edit Profile
-            </Button>
-          ) : (
-            <div className="flex gap-3">
-              <Button onClick={handleCancel} variant="outline">
-                Cancel
+        
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">My Profile</h1>
+            <p className="text-slate-600">Manage your personal information and account settings</p>
+          </div>
+          <div className="flex items-center gap-3">
+            {!isEditing ? (
+              <Button onClick={() => setIsEditing(true)} variant="primary">
+                <ApperIcon name="Edit2" size={18} />
+                Edit Profile
               </Button>
-              <Button onClick={handleSaveProfile} variant="primary" loading={saving}>
-                Save Changes
-              </Button>
-            </div>
-          )}
+            ) : (
+              <div className="flex gap-3">
+                <Button onClick={handleCancel} variant="outline">
+                  Cancel
+                </Button>
+                <Button onClick={handleSaveProfile} variant="primary" loading={saving}>
+                  Save Changes
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
